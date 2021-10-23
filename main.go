@@ -14,6 +14,13 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func world(w http.ResponseWriter, req *http.Request) {
+	_, err := fmt.Fprintf(w, "world\n")
+	if err != nil {
+		log.Errorf("Unable to write message to an output")
+	}
+}
+
 func headers(w http.ResponseWriter, req *http.Request) {
 	for name, headers := range req.Header {
 		for _, h := range headers {
@@ -30,6 +37,7 @@ func main() {
 	viper.SetDefault("PORT", 8080)
 
 	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/world", world)
 	http.HandleFunc("/headers", headers)
 
 	log.Infof("Server started at port %s...", viper.GetString("PORT"))
