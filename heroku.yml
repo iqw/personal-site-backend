@@ -1,0 +1,10 @@
+setup:
+  config:
+    PORT: 80
+build:
+  docker:
+    web: Dockerfile
+run:
+  web:
+    image: web
+    command: ./app
