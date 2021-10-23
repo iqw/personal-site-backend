@@ -13,12 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Fetch module name
-        id: fetch_module_name
-        run: |-
-          MODULE_NAME=cat ./go.mod | grep -E "^module (.*?)$" | sed 's/module //' && \
-          echo "::set-output name=module_name::$(echo $MODULE_NAME)"
-
       - name: Run tests
         run: docker build -t tests:$GITHUB_RUN_ID --target=test .
 
@@ -42,7 +36,7 @@ jobs:
         with:
           file: test/coverage-clover.xml
           base-file: test/base/coverage-clover.xml
-          dir-prefix: ${{ steps.fetch_module_name.outputs.module_name }}/
+          dir-prefix: personal-site-backend/
           max-method-coverage-decrease: 10
           max-line-coverage-decrease: 10
 
@@ -51,7 +45,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && steps.base_report.outcome != 'success' }}
         with:
           file: test/coverage-clover.xml
-          dir-prefix: ${{ steps.fetch_module_name.outputs.module_name }}/
+          dir-prefix: personal-site-backend/
 
       - uses: actions/upload-artifact@v2
         with:
