@@ -8,7 +8,6 @@ import (
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
-
 	_, err := fmt.Fprintf(w, "hello\n")
 	if err != nil {
 		log.Errorf("Unable to write message to an output")

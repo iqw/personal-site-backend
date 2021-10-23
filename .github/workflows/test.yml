@@ -1,0 +1,53 @@
+name: Tests
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: docker build -t tests:$GITHUB_RUN_ID --target=test .
+
+      - name: Extract coverage
+        run: docker cp $(docker create --rm tests:$GITHUB_RUN_ID):/code/test/coverage-clover.xml ./test/coverage-clover.xml
+
+      - uses: dawidd6/action-download-artifact@v2.14.1
+        if: ${{ github.event_name == 'pull_request' }}
+        name: Download artifact
+        continue-on-error: true
+        id: base_report
+        with:
+          workflow: .github/workflows/test.yml
+          branch: ${{ github.base_ref }}
+          name: coverage-report
+          path: test/base
+
+      - name: Coverage Report as Comment (Compared to a base)
+        uses: lucassabreu/comment-coverage-clover@v0.3.0
+        if: ${{ github.event_name == 'pull_request' && steps.base_report.outcome == 'success' }}
+        with:
+          file: test/coverage-clover.xml
+          base-file: test/base/coverage-clover.xml
+          with-chart: false
+          max-method-coverage-decrease: 10
+          max-line-coverage-decrease: 10
+
+      - name: Coverage Report as Comment (Clean)
+        uses: lucassabreu/comment-coverage-clover@v0.3.0
+        if: ${{ github.event_name == 'pull_request' && steps.base_report.outcome != 'success' }}
+        with:
+          file: test/coverage-clover.xml
+          with-chart: false
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: test/coverage-clover.xml
