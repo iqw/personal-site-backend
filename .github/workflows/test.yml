@@ -10,14 +10,14 @@ jobs:
   tests:
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Fetch module name
         id: fetch_module_name
         run: |-
-          MODULE_NAME=cat go.mod | grep -E "^module (.*?)$" | sed 's/module //' && \
+          MODULE_NAME=cat ./go.mod | grep -E "^module (.*?)$" | sed 's/module //' && \
           echo "::set-output name=module_name::$(echo $MODULE_NAME)"
-
-      - name: Checkout
-        uses: actions/checkout@v2
 
       - name: Run tests
         run: docker build -t tests:$GITHUB_RUN_ID --target=test .
