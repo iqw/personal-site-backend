@@ -31,6 +31,7 @@ func TestHello(t *testing.T) {
 	}
 
 	expectedRStr := "hello\n"
+
 	if string(rStr) != expectedRStr {
 		t.Errorf("Response is: %s, Want: %s", string(rStr), expectedRStr)
 	}
