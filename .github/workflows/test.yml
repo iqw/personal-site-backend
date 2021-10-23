@@ -42,7 +42,7 @@ jobs:
         with:
           file: test/coverage-clover.xml
           base-file: test/base/coverage-clover.xml
-          dir-prefix: ${{ steps.fetch_module_name.outputs.module_name }}
+          dir-prefix: ${{ steps.fetch_module_name.outputs.module_name }}/
           max-method-coverage-decrease: 10
           max-line-coverage-decrease: 10
 
@@ -51,7 +51,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && steps.base_report.outcome != 'success' }}
         with:
           file: test/coverage-clover.xml
-          dir-prefix: ${{ steps.fetch_module_name.outputs.module_name }}
+          dir-prefix: ${{ steps.fetch_module_name.outputs.module_name }}/
 
       - uses: actions/upload-artifact@v2
         with:
