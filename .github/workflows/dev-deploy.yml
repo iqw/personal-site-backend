@@ -2,10 +2,13 @@ name: Dev Deploy
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronize ]
+    types:
+      - opened
+      - reopened
+      - synchronize
     branches:
-      - feature/**
-      - bugfix/**
+      - 'feature/**'
+      - 'bugfix/**'
 
 jobs:
   build:
