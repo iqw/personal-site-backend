@@ -22,7 +22,7 @@ FROM modules as builder
 RUN go build -a -o ./bin/app ./
 
 # Finalize
-FROM scratch
+FROM alpine:3.14
 WORKDIR /go/bin
 # Application artifacts
 COPY --from=builder /code/bin/app .
@@ -30,5 +30,3 @@ COPY --from=builder /code/bin/app .
 # System required data
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 CMD ["./app"]
-
-EXPOSE 8080
