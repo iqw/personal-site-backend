@@ -30,3 +30,5 @@ COPY --from=builder /code/bin/app .
 # System required data
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 CMD ["./app"]
+
+EXPOSE 8080
