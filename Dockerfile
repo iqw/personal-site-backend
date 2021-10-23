@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine AS builder
+FROM golang:1.17-alpine AS modules
 # Arguments
 ARG APP_NAME
 # Set env
@@ -12,6 +12,13 @@ COPY . /code
 WORKDIR /code
 # Build binary
 RUN go mod download
+
+FROM modules as test
+RUN go get golang.org/x/tools && go get github.com/codeofthrone/goclover && \
+    go test -coverprofile test/coverage.out && \
+    goclover -f test/coverage.out -o test/coverage-clover.xml
+
+FROM modules as builder
 RUN go build -a -o ./bin/app ./
 
 # Finalize
