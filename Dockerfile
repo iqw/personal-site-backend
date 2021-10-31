@@ -22,6 +22,7 @@ RUN go get -d golang.org/x/tools && go get github.com/codeofthrone/goclover && \
 FROM modules as builder
 RUN go build -a -o ./bin/app ./
 
+
 # Finalize
 FROM alpine:3.14
 WORKDIR /go/bin
