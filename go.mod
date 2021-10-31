@@ -5,6 +5,8 @@ go 1.17
 require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.9.0
+	gorm.io/driver/postgres v1.1.2
+	gorm.io/gorm v1.21.16
 )
 
 require (
@@ -33,6 +35,4 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gorm.io/driver/postgres v1.1.2 // indirect
-	gorm.io/gorm v1.21.16 // indirect
 )
