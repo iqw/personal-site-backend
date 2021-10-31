@@ -33,7 +33,7 @@ func main() {
 	viper.SetDefault("PORT", 8080)
 
 	// TODO: another drivers?
-	db, err := gorm.Open(postgres.Open(viper.GetString("DB_DSN")), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(viper.GetString("DATABASE_URL")), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect to a database")
 	}

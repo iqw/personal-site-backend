@@ -1,4 +1,7 @@
 setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
   config:
     PORT: 80
 build:
