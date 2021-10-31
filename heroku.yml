@@ -1,10 +1,11 @@
 setup:
-  config:
-    PORT: 80
+  addons:
+    - plan: heroku-postgresql:hobby-dev
 build:
   docker:
     web: Dockerfile
 run:
   web:
     image: web
-    command: ./app
+    command:
+      - ./app

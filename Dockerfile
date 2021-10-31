@@ -1,6 +1,4 @@
 FROM golang:1.17-alpine AS modules
-# Arguments
-ARG APP_NAME
 # Set env
 ENV GO111MODULE on
 ENV CGO_ENABLED 0
@@ -13,8 +11,11 @@ WORKDIR /code
 # Build binary
 RUN go mod download
 
+FROM modules as dev
+RUN go get github.com/codegangsta/gin
+
 FROM modules as test
-RUN go get golang.org/x/tools && go get github.com/codeofthrone/goclover && \
+RUN go get -d golang.org/x/tools && go get github.com/codeofthrone/goclover && \
     go test -coverprofile test/coverage.out && \
     goclover -f test/coverage.out -o test/coverage-clover.xml
 

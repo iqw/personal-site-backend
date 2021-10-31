@@ -1,8 +1,8 @@
 ### Context
 
-Issue: #{num}
+- Closes: #{num} 
 
-- {What should be done with this PR}
+{What should be done with this PR}
 
 ### Added
 
@@ -12,6 +12,7 @@ Issue: #{num}
 
 - {What was removed in this PR}
 
-### Breaking changes
+### Release checklist
 
-{What breaking changes this PR represents}
+- [ ] Deploy tested via review app (heroku)
+- [ ] Tested locally

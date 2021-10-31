@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: personal-site-backend-dev
+    image: personal-site-backend-dev:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: dev
+    command: gin -p 8081 -a 8080 --immediate --path ./ --excludeDir ./vendor --build ./ run
+    ports:
+      - "8080:8081"
+    volumes:
+      - .:/code
+    working_dir: /code
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: host=postgres user=postgres password=postgres dbname=app port=5432 sslmode=disable TimeZone=UTC
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres:
