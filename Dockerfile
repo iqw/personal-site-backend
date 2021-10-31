@@ -12,10 +12,10 @@ WORKDIR /code
 RUN go mod download
 
 FROM modules as dev
-RUN go get -d github.com/codegangsta/gin
+RUN go get github.com/codegangsta/gin
 
 FROM modules as test
-RUN go get -d golang.org/x/tools && go get -d github.com/codeofthrone/goclover && \
+RUN go get -d golang.org/x/tools && go get github.com/codeofthrone/goclover && \
     go test -coverprofile test/coverage.out && \
     goclover -f test/coverage.out -o test/coverage-clover.xml
 
