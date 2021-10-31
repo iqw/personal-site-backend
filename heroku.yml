@@ -10,4 +10,5 @@ build:
 run:
   web:
     image: web
-    command: ./app
+    command:
+      - ./app
