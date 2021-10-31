@@ -1,6 +1,4 @@
 FROM golang:1.17-alpine AS modules
-# Arguments
-ARG APP_NAME
 # Set env
 ENV GO111MODULE on
 ENV CGO_ENABLED 0
